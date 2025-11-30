@@ -33,6 +33,7 @@ morgan.token('req-body', function (req, res) {
 })
 
 app.use(express.json())
+app.use(express.static('dist'))
 app.use(morgan(':method :url :status :res[content-length] - :response-time ms :req-body'))
 
 
@@ -98,7 +99,7 @@ app.post('/api/persons', (request, response) => {
   const newPerson = {
     name: body.name,
     number: body.number,
-    id: newId
+    id: newId.toString()
   }
   persons = persons.concat(newPerson)
 
@@ -106,6 +107,6 @@ app.post('/api/persons', (request, response) => {
 })
 
 
-const PORT = 3001
+const PORT = process.env.PORT || 3001
 app.listen(PORT)
 console.log(`"Puhelinluettelo backend" running on port ${PORT}`)
